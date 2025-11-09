@@ -26,7 +26,7 @@ A lightweight WebGPU demo project that renders a simple triangle using the WebGP
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone git@github.com:vancura/webgpu-template.git
 cd webgpu-template
 ```
 
