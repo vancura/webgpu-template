@@ -1,20 +1,23 @@
 {
-  "name": "ambilab-renderer",
-  "version": "1.0.0",
-  "description": "Lightweight WebGPU demo",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "keywords": ["webgpu", "typescript"],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.20.0",
-  "devDependencies": {
-    "@webgpu/types": "^0.1.66",
-    "typescript": "^5.9.3",
-    "vite": "^7.2.2"
-  }
+    "name": "ambilab-renderer",
+    "version": "1.0.0",
+    "description": "Lightweight WebGPU demo",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview"
+    },
+    "keywords": [
+        "webgpu",
+        "typescript"
+    ],
+    "author": "",
+    "license": "ISC",
+    "packageManager": "pnpm@10.20.0",
+    "devDependencies": {
+        "@webgpu/types": "^0.1.66",
+        "typescript": "^5.9.3",
+        "vite": "^7.2.2"
+    }
 }
