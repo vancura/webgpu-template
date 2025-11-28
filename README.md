@@ -1,116 +1,131 @@
 # WebGPU Template
 
-A lightweight WebGPU demo project that renders a simple triangle using the WebGPU API. This template provides a minimal setup for getting started with WebGPU development in TypeScript.
+[![CI](https://github.com/ambilab/webgpu-template/actions/workflows/ci.yml/badge.svg)](https://github.com/ambilab/webgpu-template/actions/workflows/ci.yml)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+[![pnpm](https://img.shields.io/badge/pnpm-10.24.0-yellow.svg)](https://pnpm.io/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-blue.svg)](https://www.typescriptlang.org/)
+[![WebGPU](https://img.shields.io/badge/WebGPU-Enabled-green.svg)](https://www.w3.org/TR/webgpu/)
+
+A minimal starter template for WebGPU projects using TypeScript. Get up and running with modern GPU programming on the
+web in minutes.
 
 ## Features
 
-- Renders a blue triangle using WebGPU
-- WebGPU support detection with error handling
-- Displays GPU adapter information
-- Fast development with Vite
-- TypeScript with strict type checking
-- Clean, minimal codebase
+- **WebGPU ready** — Pre-configured with `@webgpu/types` for full TypeScript support
+- **Modern tooling** — Vite for fast development with HMR
+- **Strict TypeScript** — Comprehensive type checking enabled
+- **Code quality** — ESLint, Prettier, and Husky pre-configured
+- **Release workflow** — Changesets for versioning and publishing
 
 ## Prerequisites
 
-- **Node.js** (v18 or higher recommended)
-- **pnpm** (v10.20.0) - specified in `package.json`
+- **Node.js** v20 or higher (LTS recommended)
+- **pnpm** v10.24.0 or higher
 - A **WebGPU-compatible browser**:
   - Chrome/Edge 113+ (Windows, macOS, Linux, Android)
-  - Chrome Canary (with WebGPU flag enabled)
-  - Firefox Nightly (with WebGPU flag enabled)
+  - Firefox Nightly (with `dom.webgpu.enabled` in `about:config`)
   - Safari 18+ (macOS/iOS)
 
-## Installation
-
-1. Clone the repository:
+## Quick Start
 
 ```bash
-git clone git@github.com:vancura/webgpu-template.git
+# Clone the repository
+git clone https://github.com/ambilab/webgpu-template.git
 cd webgpu-template
-```
 
-2. Install dependencies:
-
-```bash
+# Install dependencies
 pnpm install
-```
 
-## Usage
-
-### Development
-
-Start the development server:
-
-```bash
+# Start development server
 pnpm dev
 ```
 
-The application will be available at `http://localhost:5173` (or the port shown in the terminal).
+Open your browser at `http://localhost:5173` to see a WebGPU-rendered triangle.
 
-### Build
+## Scripts
 
-Build for production:
-
-```bash
-pnpm build
-```
-
-The output will be in the `dist` directory.
-
-### Preview
-
-Preview the production build:
-
-```bash
-pnpm preview
-```
+| Command             | Description                         |
+| ------------------- | ----------------------------------- |
+| `pnpm dev`          | Start dev server with HMR           |
+| `pnpm build`        | Type-check and build for production |
+| `pnpm preview`      | Preview the production build        |
+| `pnpm lint`         | Run ESLint                          |
+| `pnpm lint:fix`     | Run ESLint with auto-fix            |
+| `pnpm format`       | Format code with Prettier           |
+| `pnpm format:check` | Check formatting without changes    |
+| `pnpm typecheck`    | Run TypeScript type checking        |
+| `pnpm clean`        | Remove dist and cache directories   |
+| `pnpm changeset`    | Create a changeset for version bump |
+| `pnpm version:bump` | Bump version based on changesets    |
+| `pnpm release`      | Build library and publish to npm    |
 
 ## Project Structure
 
-```
+```text
 webgpu-template/
-├── index.html          # Main HTML file
 ├── src/
-│   └── main.ts        # WebGPU rendering logic
-├── package.json       # Project dependencies and scripts
-├── tsconfig.json      # TypeScript configuration
-└── README.md          # This file
+│   └── main.ts           # WebGPU demo entry point
+├── index.html            # HTML template
+├── package.json
+├── tsconfig.json         # TypeScript configuration
+├── vite.config.ts        # Vite configuration
+├── eslint.config.js      # ESLint flat config
+├── prettier.config.js    # Prettier configuration
+└── commitlint.config.js  # Commit message linting
 ```
 
 ## How It Works
 
-The application:
+The template includes a minimal WebGPU demo that:
 
-1. **Checks for WebGPU support** - Verifies that the browser supports WebGPU
-2. **Requests GPU adapter and device** - Gets access to the GPU hardware
-3. **Configures the canvas** - Sets up the WebGPU rendering context
-4. **Creates shaders** - Defines vertex and fragment shaders in WGSL
-5. **Sets up render pipeline** - Configures the rendering pipeline
-6. **Renders the triangle** - Draws a blue triangle on a dark background
+1. **Checks WebGPU support** — Displays a helpful error if unavailable
+2. **Initializes the GPU** — Requests adapter and device
+3. **Configures the canvas** — Sets up the WebGPU context
+4. **Creates shaders** — Vertex and fragment shaders in WGSL
+5. **Builds a pipeline** — Configures the render pipeline
+6. **Renders a triangle** — Clears to dark gray, draws a blue triangle
 
-The triangle is defined by three vertices in the vertex shader:
-
-- Top vertex: `(0.0, 0.5)`
-- Bottom left: `(-0.5, -0.5)`
-- Bottom right: `(0.5, -0.5)`
-
-## Technologies Used
-
-- **WebGPU** - Modern graphics API for the web
-- **TypeScript** - Type-safe JavaScript
-- **Vite** - Fast build tool and dev server
-- **WGSL** - WebGPU Shading Language
+```typescript
+// Example: Creating a shader module
+const vertexShaderModule = device.createShaderModule({
+  label: 'Vertex Shader',
+  code: `
+        @vertex
+        fn main(@builtin(vertex_index) vertexIndex: u32) -> @builtin(position) vec4f {
+            var positions = array<vec2f, 3>(
+                vec2f(0.0, 0.5),
+                vec2f(-0.5, -0.5),
+                vec2f(0.5, -0.5)
+            );
+            return vec4f(positions[vertexIndex], 0.0, 1.0);
+        }
+    `,
+});
+```
 
 ## Browser Compatibility
 
-WebGPU is still relatively new. If you encounter issues:
+| Browser     | Version | Status                      |
+| ----------- | ------- | --------------------------- |
+| Chrome/Edge | 113+    | Enabled by default          |
+| Firefox     | Nightly | Enable `dom.webgpu.enabled` |
+| Safari      | 18+     | Enabled by default          |
 
-1. **Chrome/Edge**: Ensure you're on version 113+ and WebGPU is enabled
-2. **Firefox**: Enable `dom.webgpu.enabled` in `about:config`
-3. **Safari**: Requires Safari 18+ on macOS/iOS
+The demo displays a user-friendly error message if WebGPU is not supported.
 
-The application will display an error message if WebGPU is not supported.
+## Technologies
+
+- **[WebGPU](https://www.w3.org/TR/webgpu/)** — Modern GPU API for the web
+- **[TypeScript](https://www.typescriptlang.org/)** — Type-safe JavaScript
+- **[Vite](https://vite.dev/)** — Fast build tool with HMR
+- **[WGSL](https://www.w3.org/TR/WGSL/)** — WebGPU Shading Language
+
+## Resources
+
+- [WebGPU Specification](https://www.w3.org/TR/webgpu/)
+- [WGSL Specification](https://www.w3.org/TR/WGSL/)
+- [WebGPU Fundamentals](https://webgpufundamentals.org/)
+- [Tour of WGSL](https://google.github.io/tour-of-wgsl/)
 
 ## License
 

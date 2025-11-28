@@ -1,33 +1,35 @@
+/**
+ * WebGPU demo entry point.
+ * Displays a simple triangle to verify WebGPU is working.
+ * This is a standalone test, not part of the webgpu-template engine.
+ */
 async function main() {
-    const canvas = document.getElementById(
-        "canvas"
-    ) as HTMLCanvasElement | null;
-    const errorDiv = document.getElementById("error");
+    const canvas = document.getElementById('canvas') as HTMLCanvasElement | null;
 
     if (!canvas) {
-        showError("Canvas element not found");
+        showError('Canvas element not found');
         return;
     }
 
     // Check WebGPU support
     if (!navigator.gpu) {
-        showError("WebGPU is not supported in this browser.");
+        showError('WebGPU is not supported in this browser.');
         return;
     }
 
     // Request adapter and device
     const adapter = await navigator.gpu.requestAdapter();
     if (!adapter) {
-        showError("Failed to get GPU adapter.");
+        showError('Failed to get GPU adapter.');
         return;
     }
 
     const device = await adapter.requestDevice();
 
     // Configure canvas context
-    const context = canvas.getContext("webgpu");
+    const context = canvas.getContext('webgpu');
     if (!context) {
-        showError("Failed to get WebGPU context.");
+        showError('Failed to get WebGPU context.');
         return;
     }
 
@@ -35,7 +37,7 @@ async function main() {
     context.configure({
         device,
         format,
-        alphaMode: "opaque",
+        alphaMode: 'opaque',
     });
 
     // Vertex shader - defines a triangle
@@ -61,26 +63,26 @@ async function main() {
 
     // Create shader modules
     const vertexShaderModule = device.createShaderModule({
-        label: "Vertex Shader",
+        label: 'Vertex Shader',
         code: vertexShaderCode,
     });
 
     const fragmentShaderModule = device.createShaderModule({
-        label: "Fragment Shader",
+        label: 'Fragment Shader',
         code: fragmentShaderCode,
     });
 
     // Create render pipeline
     const pipeline = device.createRenderPipeline({
-        label: "Triangle Pipeline",
-        layout: "auto",
+        label: 'Triangle Pipeline',
+        layout: 'auto',
         vertex: {
             module: vertexShaderModule,
-            entryPoint: "main",
+            entryPoint: 'main',
         },
         fragment: {
             module: fragmentShaderModule,
-            entryPoint: "main",
+            entryPoint: 'main',
             targets: [
                 {
                     format,
@@ -88,22 +90,25 @@ async function main() {
             ],
         },
         primitive: {
-            topology: "triangle-list",
+            topology: 'triangle-list',
         },
     });
 
-    // Render function
+    /**
+     * Renders a single frame with the demo triangle.
+     * Clears to dark gray and draws a blue triangle.
+     */
     function render() {
         const commandEncoder = device.createCommandEncoder();
-        const textureView = context.getCurrentTexture().createView();
+        const textureView = context!.getCurrentTexture().createView();
 
         const renderPass = commandEncoder.beginRenderPass({
             colorAttachments: [
                 {
                     view: textureView,
                     clearValue: { r: 0.1, g: 0.1, b: 0.1, a: 1.0 },
-                    loadOp: "clear",
-                    storeOp: "store",
+                    loadOp: 'clear',
+                    storeOp: 'store',
                 },
             ],
         });
@@ -119,20 +124,19 @@ async function main() {
     render();
 
     // Update info
-    const info = document.getElementById("info");
+    const info = document.getElementById('info');
     if (info) {
-        info.textContent = `WebGPU Demo - Adapter: ${
-            adapter.info?.description ?? "Unknown"
-        }`;
+        info.textContent = `WebGPU Demo - Adapter: ${adapter.info?.description ?? 'Unknown'}`;
     }
-
-    console.log("WebGPU initialized successfully!");
-    console.log("Adapter:", adapter.info);
-    console.log("Device:", device);
 }
 
+/**
+ * Displays an error message to the user.
+ * Shows in both the page error div and console.
+ * @param message - Error description to display.
+ */
 function showError(message: string) {
-    const errorDiv = document.getElementById("error");
+    const errorDiv = document.getElementById('error');
     if (errorDiv) {
         errorDiv.textContent = `Error: ${message}`;
     }
@@ -141,9 +145,5 @@ function showError(message: string) {
 
 // Start the application
 main().catch((error) => {
-    showError(
-        `Initialization failed: ${
-            error instanceof Error ? error.message : String(error)
-        }`
-    );
+    showError(`Initialization failed: ${error instanceof Error ? error.message : String(error)}`);
 });

@@ -1,23 +1,86 @@
 {
-    "name": "ambilab-renderer",
-    "version": "1.0.0",
-    "description": "Lightweight WebGPU demo",
-    "type": "module",
-    "scripts": {
-        "dev": "vite",
-        "build": "tsc && vite build",
-        "preview": "vite preview"
-    },
-    "keywords": [
-        "webgpu",
-        "typescript"
-    ],
-    "author": "",
-    "license": "ISC",
-    "packageManager": "pnpm@10.20.0",
-    "devDependencies": {
-        "@webgpu/types": "^0.1.66",
-        "typescript": "^5.9.3",
-        "vite": "^7.2.2"
+  "name": "webgpu-template",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "A template for WebGPU projects using TypeScript.",
+  "author": "Václav Vančura",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ambilab/webgpu-template.git"
+  },
+  "homepage": "https://github.com/ambilab/webgpu-template#readme",
+  "bugs": {
+    "url": "https://github.com/ambilab/webgpu-template/issues"
+  },
+  "keywords": [
+    "webgpu",
+    "typescript",
+    "template",
+    "webgpu-template"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "main": "./dist/webgpu-template.cjs",
+  "module": "./dist/webgpu-template.js",
+  "types": "./dist/WebGPU-Template.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/WebGPU-Template.d.ts",
+      "import": "./dist/webgpu-template.js",
+      "require": "./dist/webgpu-template.cjs"
     }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "build:lib": "vite build --mode lib",
+    "build:deploy": "pnpm build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist node_modules/.vite",
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "changeset:publish": "pnpm build:lib && changeset publish",
+    "version:bump": "pnpm changeset:version && pnpm install --no-frozen-lockfile",
+    "release": "pnpm build:lib && pnpm changeset:publish",
+    "prepublishOnly": "pnpm run build:lib",
+    "prepare": "husky"
+  },
+  "packageManager": "pnpm@10.24.0+sha512.01ff8ae71b4419903b65c60fb2dc9d34cf8bb6e06d03bde112ef38f7a34d6904c424ba66bea5cdcf12890230bf39f9580473140ed9c946fef328b6e5238a345a",
+  "devDependencies": {
+    "@changesets/cli": "^2.29.8",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.48.0",
+    "@typescript-eslint/parser": "^8.48.0",
+    "@webgpu/types": "^0.1.66",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsdoc": "^50.8.0",
+    "eslint-plugin-perfectionist": "^4.15.1",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-security": "^3.0.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.7.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.4",
+    "vite-plugin-dts": "^4.5.4"
+  }
 }
