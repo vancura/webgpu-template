@@ -11,6 +11,11 @@ tests/
 .vscode/
 .idea/
 .changeset/
+
+# AI assistant configs (development only)
+.cursor/
+.rules
+.claude/
 *.config.js
 *.config.ts
 tsconfig.json
@@ -18,11 +23,12 @@ tsconfig.json
 .gitignore
 .gitattributes
 .prettierignore
+prettier.config.js
+biome.json
 .lintstagedrc.json
 commitlint.config.js
 
 # Development files
-index.html
 vite.config.*.timestamp-*
 *.tsbuildinfo
 .eslintcache
@@ -30,9 +36,6 @@ vite.config.*.timestamp-*
 # Documentation (keep README.md and LICENSE)
 CONTRIBUTING.md
 CODE_OF_CONDUCT.md
-DEPLOYMENT.md
-PHASE_2.md
-PHASE_3.md
 docs/
 
 # Build artifacts

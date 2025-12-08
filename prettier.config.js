@@ -18,23 +18,9 @@ export default {
             },
         },
         {
-            files: ['*.json', '*.jsonc'],
-            options: {
-                tabWidth: 2,
-            },
-        },
-        {
             files: ['*.yml', '*.yaml'],
             options: {
                 tabWidth: 2,
-            },
-        },
-        {
-            files: ['*.css'],
-            options: {
-                tabWidth: 4,
-                printWidth: 100,
-                singleQuote: false,
             },
         },
     ],

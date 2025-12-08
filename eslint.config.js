@@ -23,6 +23,8 @@ export default [
             '**/coverage/**',
             '**/dist/**',
             '**/node_modules/**',
+            '.pnpm-store/**',
+            '**/.pnpm-store/**',
             'vite.config.ts.timestamp-*',
         ],
     },
@@ -53,7 +55,7 @@ export default [
         rules: {
             // Base ESLint rules
             ...eslint.configs.recommended.rules,
-            'no-console': ['warn', { allow: ['warn', 'error'] }],
+            'no-console': 'off',
             'no-debugger': 'error',
             'no-unused-vars': 'off', // TypeScript handles this
 
@@ -126,8 +128,9 @@ export default [
         },
         rules: {
             ...eslint.configs.recommended.rules,
-            'no-console': ['warn', { allow: ['warn', 'error'] }],
+            'no-console': 'off',
             'no-debugger': 'error',
+            'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
 
             // JSDoc rules (relaxed for JS config files)
             'jsdoc/check-alignment': 'warn',
@@ -153,7 +156,7 @@ export default [
             'jsdoc/require-param': 'off',
             'jsdoc/require-returns': 'off',
             'jsdoc/require-description': 'off',
-            'no-console': 'off',
+            'jsdoc/check-param-names': 'off',
             '@typescript-eslint/no-non-null-assertion': 'off',
         },
     },
