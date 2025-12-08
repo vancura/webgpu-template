@@ -29,8 +29,10 @@ test-results/
 .vitest/
 
 # IDE and editor files
-.vscode/settings.json
 .vscode/launch.json
+.vscode/*.code-workspace
+!.vscode/settings.json
+!.vscode/extensions.json
 .idea/
 *.swp
 *.swo
